@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^register/$', accounts.views.register, name='register'),
     url(r'^profile/$', accounts.views.profile, name='profile'),
     url(r'^login/$', accounts.views.login, name='login'),
-    url(r'^//logout/$', accounts.views.logout, name='logout'),
+    url(r'^/logout/$', accounts.views.logout, name='logout'),
 ]
