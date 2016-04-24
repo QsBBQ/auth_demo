@@ -60,3 +60,12 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# VIM
+*.un~
+
+# Mac
+*.DS_STORE
+
+# sqlite
+*.sqlite3
