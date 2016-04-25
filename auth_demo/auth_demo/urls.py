@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^profile/$', accounts.views.profile, name='profile'),
     url(r'^login/$', accounts.views.login, name='login'),
     url(r'^/logout/$', accounts.views.logout, name='logout'),
+    url(r'^cancel_subscription/$', cancel_subscription, name='cancel_subscription'),
 ]

@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import datetime
 import stripe
+import arrow
 
 # Create your views here.
 stripe.api_key = settings.STRIPE_SECRET
@@ -17,15 +18,19 @@ def register(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             try:
-                customer = stripe.Charge.create(
-                        amount=499,
-                        currency="USD",
-                        description=form.cleaned_data['email'],
+                customer = stripe.Customer.create(
+                        email=form.cleaned_data['email'],
                         card=form.cleaned_data['stripe_id'],
+                        plan='REG_MONTHLY',
                 )
             except stripe.error.CardError, e:
                 messages.error(request, "Your card was declined!")
-            if customer.paid:
+            if customer:
+                user = form.save()
+                user.stripe_id = customer.id
+                user.subscription_end = arrow.now().replace(weeks=+4).datetime
+                user.save()    
+                # Hmm
                 form.save()
                 user = auth.authenticate(email=request.POST.get('email'),
                                          password=request.POST.get('password1'))
@@ -46,7 +51,16 @@ def register(request):
  
     return render(request, 'accounts/register.html', args)
 
-login_required(login_url='/login/')
+@login_required(login_url='/accounts/login/')
+def cancel_subscription(request):
+    try:
+        customer = stripe.Customer.retrieve(request.user.stripe_id)
+        customer.cancel_subscription(at_period_end=True)
+    except Exception, e:
+        messages.error(request, e)
+    return redirect('profile')
+
+login_required(login_url='/accounts/login/')
 def profile(request):
     return render(request, 'accounts/profile.html')
 
