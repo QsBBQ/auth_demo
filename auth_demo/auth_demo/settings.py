@@ -28,8 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Stripe environment variables
-STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE', 'sk_test_6uNMWr7Z9Z3ZGewwYXytqEoF')
-STRIPE_SECRET = os.getenv('STRIPE_SECRET', 'pk_test_39H0t8CJ4RU5thgpTpG7fooO')
+STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE', 'pk_test_39H0t8CJ4RU5thgpTpG7fooO')
+STRIPE_SECRET = os.getenv('STRIPE_SECRET', 'sk_test_6uNMWr7Z9Z3ZGewwYXytqEoF')
 
 # Application definition
 
