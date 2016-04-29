@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'hello',
     'accounts',
     'django_forms_bootstrap',
+    'django_extensions',
 ]
 
 MIDDLEWARE_CLASSES = [
